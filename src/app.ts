@@ -1,6 +1,7 @@
 import express from "express";
 import userRoutes from "./routes/user.js";
 import productRoutes from "./routes/product.js";
+import orderRoutes from "./routes/order.js";
 import { connectDB } from "./utils/features.js";
 import { errorMiddleware } from "./midlewares/error.js";
 import NodeCache from "node-cache";
@@ -13,6 +14,7 @@ app.use(express.json());
 //using routes
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/product", productRoutes);
+app.use("/api/v1/order", orderRoutes);
 app.use("/uploads", express.static("uploads"));
 app.use(errorMiddleware);
 
