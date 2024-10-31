@@ -18,6 +18,7 @@
     "mongoose": "^8.6.3",
     "multer": "^1.4.5-lts.1",
     "node-cache": "^5.1.2",
+    "stripe": "^17.3.0",
     "uuid": "^10.0.0",
     "validator": "^13.12.0"
   },
