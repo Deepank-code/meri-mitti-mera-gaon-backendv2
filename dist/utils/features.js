@@ -12,9 +12,9 @@ export const connectDB = (uri) => {
 export const invalidateCache = async ({ product, order, admin, userId, orderId, productId, }) => {
     if (product) {
         const productKeys = [
-            "latest-product",
+            "latest-products",
             "categories",
-            "all-product",
+            "all-products",
         ];
         if (typeof productId === "string")
             productKeys.push(`product-${productId}`);
@@ -25,7 +25,7 @@ export const invalidateCache = async ({ product, order, admin, userId, orderId, 
     if (order) {
         const ordersKeys = [
             "all-orders",
-            `my-order-${userId}`,
+            `my-orders-${userId}`,
             `order-${orderId}`,
         ];
         myCache.del(ordersKeys);

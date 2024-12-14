@@ -5,6 +5,7 @@ import { errorMiddleware } from "./midlewares/error.js";
 
 import NodeCache from "node-cache";
 import { config } from "dotenv";
+import cors from "cors";
 
 //importing routes
 import userRoutes from "./routes/user.js";
@@ -26,6 +27,7 @@ const app = express();
 export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/v1/user", userRoutes);
 

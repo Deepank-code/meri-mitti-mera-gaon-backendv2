@@ -8,7 +8,7 @@ import {
   getChartData,
   getInventories,
 } from "../utils/features.js";
-import { getCategories } from "./productController.js";
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 
 export const getDashboardStats = TryCatch(async (req, res, next) => {
   let stats;

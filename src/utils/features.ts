@@ -23,9 +23,9 @@ export const invalidateCache = async ({
 }: InvalidateCacheProps) => {
   if (product) {
     const productKeys: string[] = [
-      "latest-product",
+      "latest-products",
       "categories",
-      "all-product",
+      "all-products",
     ];
     if (typeof productId === "string") productKeys.push(`product-${productId}`);
     if (typeof productId === "object")
@@ -36,7 +36,7 @@ export const invalidateCache = async ({
   if (order) {
     const ordersKeys: string[] = [
       "all-orders",
-      `my-order-${userId}`,
+      `my-orders-${userId}`,
       `order-${orderId}`,
     ];
 

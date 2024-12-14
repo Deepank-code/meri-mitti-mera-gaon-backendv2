@@ -3,7 +3,6 @@ import { TryCatch } from "../midlewares/error.js";
 import ErrorHandler from "../utils/utility-class.js";
 export const newUser = TryCatch(async (req, res, next) => {
     const { name, email, photo, _id, dob, gender } = req.body;
-    console.log(name, email, photo, _id, dob, gender);
     let user = await User.findById(_id);
     if (user)
         return res.status(200).json({
@@ -11,7 +10,7 @@ export const newUser = TryCatch(async (req, res, next) => {
             message: `welcome ${user.name}`,
         });
     if (!name || !email || !photo || !_id || !dob || !gender) {
-        next(new ErrorHandler("Please enter all Field!!!", 400));
+        return next(new ErrorHandler("Please enter all Field!!!", 400));
     }
     user = await User.create({
         name,
@@ -29,7 +28,7 @@ export const newUser = TryCatch(async (req, res, next) => {
 export const getAllUser = TryCatch(async (req, res, next) => {
     const allUser = await User.find({});
     if (allUser) {
-        return res.status(201).json({
+        return res.status(200).json({
             success: true,
             allUser,
         });
@@ -41,7 +40,7 @@ export const getUser = TryCatch(async (req, res, next) => {
     if (!user) {
         return next(new ErrorHandler("Invalid id", 400));
     }
-    return res.status(201).json({
+    return res.status(200).json({
         success: true,
         user,
     });

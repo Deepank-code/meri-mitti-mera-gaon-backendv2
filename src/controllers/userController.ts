@@ -12,7 +12,6 @@ export const newUser = TryCatch(
     next: NextFunction
   ) => {
     const { name, email, photo, _id, dob, gender } = req.body;
-    console.log(name, email, photo, _id, dob, gender);
 
     let user = await User.findById(_id);
     if (user)
@@ -21,7 +20,7 @@ export const newUser = TryCatch(
         message: `welcome ${user.name}`,
       });
     if (!name || !email || !photo || !_id || !dob || !gender) {
-      next(new ErrorHandler("Please enter all Field!!!", 400));
+      return next(new ErrorHandler("Please enter all Field!!!", 400));
     }
     user = await User.create({
       name,
@@ -38,21 +37,15 @@ export const newUser = TryCatch(
   }
 );
 
-export const getAllUser = TryCatch(
-  async (
-    req: Request<{}, {}, newUserTypes>,
-    res: Response,
-    next: NextFunction
-  ) => {
-    const allUser = await User.find({});
-    if (allUser) {
-      return res.status(201).json({
-        success: true,
-        allUser,
-      });
-    }
+export const getAllUser = TryCatch(async (req, res, next) => {
+  const allUser = await User.find({});
+  if (allUser) {
+    return res.status(200).json({
+      success: true,
+      allUser,
+    });
   }
-);
+});
 
 export const getUser = TryCatch(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -61,7 +54,7 @@ export const getUser = TryCatch(
     if (!user) {
       return next(new ErrorHandler("Invalid id", 400));
     }
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
       user,
     });

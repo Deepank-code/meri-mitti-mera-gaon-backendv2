@@ -44,6 +44,6 @@ userSchema.virtual("age").get(function () {
         (today.getMonth() === dob.getMonth() && today.getDate() < dob.getDate())) {
         age--;
     }
+    return age;
 });
 export const User = mongoose.model("User", userSchema);
-User;

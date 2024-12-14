@@ -63,7 +63,6 @@ userSchema.virtual("age").get(function () {
   ) {
     age--;
   }
+  return age;
 });
 export const User = mongoose.model<IUser>("User", userSchema);
-
-User;

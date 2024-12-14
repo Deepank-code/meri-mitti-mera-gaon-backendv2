@@ -10,10 +10,6 @@ import {
 
 const app = express.Router();
 
-app.get("hello", (req, res, next) => {
-  res.send("hello");
-});
-
 app.post("/coupon/new", newCoupon);
 app.get("/discount", applyDiscount);
 app.get("/all-coupon", adminOnly, allCoupons);
