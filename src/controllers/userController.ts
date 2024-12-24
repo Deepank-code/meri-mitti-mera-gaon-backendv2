@@ -38,11 +38,11 @@ export const newUser = TryCatch(
 );
 
 export const getAllUser = TryCatch(async (req, res, next) => {
-  const allUser = await User.find({});
-  if (allUser) {
+  const users = await User.find({});
+  if (users) {
     return res.status(200).json({
       success: true,
-      allUser,
+      users,
     });
   }
 });

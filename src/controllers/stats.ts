@@ -8,7 +8,6 @@ import {
   getChartData,
   getInventories,
 } from "../utils/features.js";
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
 
 export const getDashboardStats = TryCatch(async (req, res, next) => {
   let stats;
@@ -225,6 +224,7 @@ export const getPieChart = TryCatch(async (req, res, next) => {
       User.countDocuments({ role: "admin" }),
       User.countDocuments({ role: "user" }),
     ]);
+
     const orderFullFillment = {
       processing: processingOrder,
       shipping: shippedOrder,
@@ -274,6 +274,7 @@ export const getPieChart = TryCatch(async (req, res, next) => {
     };
     charts = {
       orderFullFillment,
+      stockAvailablity,
       productCategoriesRatio: categoryCount,
       revenueDistribution,
       adminCustomer,

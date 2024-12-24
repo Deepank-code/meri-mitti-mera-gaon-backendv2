@@ -29,7 +29,7 @@ const orderSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    subtotal: {
+    subTotal: {
       type: Number,
       required: true,
     },

@@ -67,7 +67,7 @@ export type orderItemsType = {
 export interface newOrderRequestBody {
   shippingInfo: {};
   user: string;
-  subtotal: number;
+  subTotal: number;
   tax: number;
   shippingCharges: number;
   discount: number;
