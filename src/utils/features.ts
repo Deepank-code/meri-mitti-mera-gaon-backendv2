@@ -90,32 +90,35 @@ export const getInventories = async ({
   });
   return categoryCount;
 };
-// interface MyDocument extends Document {
-//   createdAt: Date;
-//   discount?: number;
-//   total?: number;
-// }
-export const getChartData = ({ length, docArr, today, property }: any) =>
-  // : {
-  //   length: number;
-  //   docArr: MyDocument[];
+interface MyDocument extends Document {
+  createdAt: Date;
+  discount?: number;
+  total?: number;
+}
+export const getChartData = ({
+  length,
+  docArr,
+  today,
+  property,
+}: {
+  length: number;
+  docArr: MyDocument[];
 
-  //   today: Date;
-  //   property?: "discount" | "total";
-  // }
-  {
-    const data: number[] = new Array(length).fill(0);
-    docArr.forEach((i: any) => {
-      const creationDate: Date = i.createdAt;
-      const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
+  today: Date;
+  property?: "discount" | "total";
+}) => {
+  const data: number[] = new Array(length).fill(0);
+  docArr.forEach((i) => {
+    const creationDate: Date = i.createdAt;
+    const monthDiff = (today.getMonth() - creationDate.getMonth() + 12) % 12;
 
-      if (monthDiff < length) {
-        if (property) {
-          data[length - monthDiff - 1] += i[property]!;
-        } else {
-          data[length - monthDiff - 1] += 1;
-        }
+    if (monthDiff < length) {
+      if (property) {
+        data[length - monthDiff - 1] += i[property]!;
+      } else {
+        data[length - monthDiff - 1] += 1;
       }
-    });
-    return data;
-  };
+    }
+  });
+  return data;
+};
