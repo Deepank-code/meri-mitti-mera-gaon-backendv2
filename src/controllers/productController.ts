@@ -3,7 +3,7 @@ import { myCache } from "../app.js";
 
 import { TryCatch } from "../midlewares/error.js";
 import { Product } from "../models/product.js";
-import { invalidateCache } from "../utils/features.js";
+import { invalidateCache, uploadToCloudinary } from "../utils/features.js";
 import ErrorHandler from "../utils/utility-class.js";
 
 import {
@@ -74,17 +74,16 @@ export const newProduct = TryCatch(async (req, res, next) => {
   const photo = req.file;
   if (!photo) return next(new ErrorHandler("Please add Photo", 400));
   if (!name || !price || !stock || !category) {
-    rm(photo.path, () => {
-      console.log("Deleted");
-    });
     return next(new ErrorHandler("Please enter All Fields", 400));
   }
+
+  const photoUrl = uploadToCloudinary(photo);
   await Product.create({
     name,
     price,
     stock,
     category: category.toLowerCase(),
-    photo: photo.path,
+    photo: photoUrl,
   });
   invalidateCache({ product: true, admin: true });
   return res.status(201).json({

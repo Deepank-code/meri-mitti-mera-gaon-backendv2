@@ -3,7 +3,17 @@ import { InvalidateCacheProps, orderItemsType } from "../types/types.js";
 import { myCache } from "../app.js";
 import { Product } from "../models/product.js";
 import { Order } from "../models/order.js";
+import { v2 as cloudinary } from "cloudinary";
+const getBase64 = (file: Express.Multer.File) =>
+  `data:$(file.mimetype);base64,${file.buffer.toString("base64")}`;
+export const uploadToCloudinary = async (file: Express.Multer.File) => {
+  const result = await cloudinary.uploader.upload(getBase64(file));
 
+  return {
+    public_id: result.public_id,
+    url: result.secure_url,
+  };
+};
 export const connectDB = (uri: string) => {
   mongoose
     .connect(uri, {

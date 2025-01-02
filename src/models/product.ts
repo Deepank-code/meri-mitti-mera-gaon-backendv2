@@ -1,14 +1,12 @@
 import mongoose from "mongoose";
 
 interface Product extends Document {
-
   name: string;
- 
+
   photo: string;
   price: string;
   stock: number;
   category: string;
-
 }
 const productSchema = new mongoose.Schema(
   {
@@ -17,8 +15,14 @@ const productSchema = new mongoose.Schema(
       required: [true, "please enter name"],
     },
     photo: {
-      type: String,
-      required: [true, "please enter photo"],
+      public_id: {
+        type: String,
+        required: [true, "please enter public id"],
+      },
+      url: {
+        type: String,
+        required: [true, "please enter Url"],
+      },
     },
     price: {
       type: String,

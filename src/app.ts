@@ -2,7 +2,7 @@ import express from "express";
 import Stripe from "stripe";
 import { connectDB } from "./utils/features.js";
 import { errorMiddleware } from "./midlewares/error.js";
-
+import { v2 as cloudinary } from "cloudinary";
 import NodeCache from "node-cache";
 import { config } from "dotenv";
 import cors from "cors";
@@ -23,6 +23,12 @@ const port = process.env.PORT || 4000;
 const MONGOURI = process.env.MONGO_URI || "";
 const stripeKey = process.env.STRIPE_KEY || "";
 connectDB(MONGOURI);
+cloudinary.config({
+  cloud_name: "dr7uixrhc",
+  secure: true,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET_KEY,
+});
 const app = express();
 export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
