@@ -4,14 +4,24 @@ import { myCache } from "../app.js";
 import { Product } from "../models/product.js";
 import { Order } from "../models/order.js";
 import { v2 as cloudinary } from "cloudinary";
-const getBase64 = (file: Express.Multer.File) =>
-  `data:$(file.mimetype);base64,${file.buffer.toString("base64")}`;
+const getBase64 = (file: Express.Multer.File): string => {
+  if (!file || !file.buffer || !file.mimetype) {
+    throw new Error("Invalid file object");
+  }
+  return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
+};
+
 export const uploadToCloudinary = async (file: Express.Multer.File) => {
   const result = await cloudinary.uploader.upload(getBase64(file));
-
+  const transformedUrl = cloudinary.url(result.public_id, {
+    width: 400,
+    height: 400,
+    crop: "fill",
+    gravity: "auto",
+  });
   return {
     public_id: result.public_id,
-    url: result.secure_url,
+    url: transformedUrl,
   };
 };
 export const connectDB = (uri: string) => {

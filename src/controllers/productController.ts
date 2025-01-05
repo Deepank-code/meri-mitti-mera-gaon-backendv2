@@ -77,7 +77,8 @@ export const newProduct = TryCatch(async (req, res, next) => {
     return next(new ErrorHandler("Please enter All Fields", 400));
   }
 
-  const photoUrl = uploadToCloudinary(photo);
+  const photoUrl = await uploadToCloudinary(photo);
+
   await Product.create({
     name,
     price,
