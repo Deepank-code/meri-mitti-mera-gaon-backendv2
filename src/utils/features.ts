@@ -11,18 +11,33 @@ const getBase64 = (file: Express.Multer.File): string => {
   return `data:${file.mimetype};base64,${file.buffer.toString("base64")}`;
 };
 
-export const uploadToCloudinary = async (file: Express.Multer.File) => {
-  const result = await cloudinary.uploader.upload(getBase64(file));
-  const transformedUrl = cloudinary.url(result.public_id, {
-    width: 400,
-    height: 400,
-    crop: "fill",
-    gravity: "auto",
+export const uploadToCloudinary = async (files: Express.Multer.File[]) => {
+  const promises = files.map(async (file) => {
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.upload(getBase64(file), (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+    });
   });
-  return {
-    public_id: result.public_id,
-    url: transformedUrl,
-  };
+  const result = await Promise.all(promises);
+  return result.map((i: any) => {
+    return {
+      public_id: i.public_id,
+      url: i.secure_url,
+    };
+  });
+};
+export const deleteFromCloudinary = async (publicIds: string[]) => {
+  const promises = publicIds.map((id) => {
+    return new Promise<void>((resolve, reject) => {
+      cloudinary.uploader.destroy(id, (error, result) => {
+        if (error) return reject(error);
+        resolve();
+      });
+    });
+  });
+  await Promise.all(promises);
 };
 export const connectDB = (uri: string) => {
   mongoose

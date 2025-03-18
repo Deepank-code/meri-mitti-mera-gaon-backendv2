@@ -23,16 +23,19 @@ const port = process.env.PORT || 4000;
 const MONGOURI = process.env.MONGO_URI || "";
 const stripeKey = process.env.STRIPE_KEY || "";
 connectDB(MONGOURI);
+
 cloudinary.config({
   cloud_name: "dr7uixrhc",
-  secure: true,
+
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_SECRET_KEY,
+  secure: true,
 });
 const app = express();
 export const stripe = new Stripe(stripeKey);
 export const myCache = new NodeCache();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use("/api/v1/user", userRoutes);

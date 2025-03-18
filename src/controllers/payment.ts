@@ -19,7 +19,7 @@ export const createPaymentIntent = TryCatch(async (req, res, next) => {
 
 export const newCoupon = TryCatch(async (req, res, next) => {
   const { coupon, amount } = req.body;
-
+  console.log(req.body);
   if (!coupon || !amount)
     return next(new ErrorHandler("Please enter both field", 400));
   await Coupon.create({ coupon, amount });
